@@ -3,6 +3,10 @@ module Api
 		class CharactersController < ApiController
 		  before_action :set_character, only: %i[ show update destroy ]
 
+		  rescue_from ActiveRecord::NoMethodError do |e|
+		  	render json: { status: "500", error: "Method not found." }, status: :internal_server_error
+		  end
+
 		  # GET /characters
 		  def index
 		    @characters = Character.all
@@ -20,7 +24,7 @@ module Api
 		    @character = Character.new(character_params)
 
 		    if @character.save
-		      render json: @character, status: :created, location: @character
+		      render json: @character, status: :created, location: url_for([:api, :v1, @character])
 		    else
 		      render json: @character.errors, status: :unprocessable_entity
 		    end
