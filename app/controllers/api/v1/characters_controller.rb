@@ -3,7 +3,7 @@ module Api
 		class CharactersController < ApiController
 		  before_action :set_character, only: %i[ show update destroy ]
 
-		  rescue_from ActiveRecord::NoMethodError do |e|
+		  rescue_from NoMethodError do |e|
 		  	render json: { status: "500", error: "Method not found." }, status: :internal_server_error
 		  end
 
