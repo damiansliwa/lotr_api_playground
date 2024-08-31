@@ -3,3 +3,17 @@
 		<span><%= character.name %></span> belongs to a <span><%= character.race %></span> race and lives in <span><%= character.realm %></span> realm.
 	</p>
 <% end %>
+
+<%= @response %>
+
+<hr />
+
+<%= @names %>
+
+<hr />
+
+<p>
+	<% @names.each do |name| %>
+		<span><%= name %></span>, 
+	<% end %>
+</p>

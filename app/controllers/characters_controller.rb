@@ -1,9 +1,18 @@
 class CharactersController < ApplicationController
   before_action :set_character, only: %i[ show update destroy ]
 
-  # GET /characters
+  def new
+  end
+
+  def edit
+  end
+
   def index
     @characters = Character.all
+    response = HTTParty.get('https://lotrapi.co/api/v1/characters')
+    @response = JSON.parse(response.body)["results"]
+    @names = @response.map { |character| character["name"] }
+    
   end
 
   # GET /characters/1

@@ -8,6 +8,8 @@ gem "sqlite3", ">= 1.4"
 gem "puma", ">= 5.0"
 # Use Active Record Serializers
 gem 'active_model_serializers', '~> 0.10.0'
+# Use HTTParty to make some http fun!
+gem 'httparty', '~> 0.22.0'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
