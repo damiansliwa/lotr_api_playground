@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :characters, only: %i[index create show update destroy]
+      get 'external_api/fetch_character/:id', to: 'external_api#fetch_character'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
