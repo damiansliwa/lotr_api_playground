@@ -11,6 +11,12 @@ module Api
 		  def index
 		    @characters = Character.all
 
+		    if params[:name].present?
+		    	@characters = @characters.where("name LIKE ?", "%#{params[:name]}%")
+		    elsif params[:race].present?
+		    	@characters = @characters.where("race LIKE ?", "%#{params[:race]}%")
+		    end
+
 		    render json: @characters
 		  end
 
