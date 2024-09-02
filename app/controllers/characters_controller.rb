@@ -12,7 +12,6 @@ class CharactersController < ApplicationController
     response = HTTParty.get('https://lotrapi.co/api/v1/characters')
     @response = JSON.parse(response.body)["results"]
     @names = @response.map { |character| character["name"] }
-    
   end
 
   # GET /characters/1

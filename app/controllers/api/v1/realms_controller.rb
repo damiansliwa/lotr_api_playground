@@ -4,7 +4,6 @@ module Api
       def index
         realms = Character.select(:realm).distinct.pluck(:realm)
         render json: realms, status: :ok
-        # render json: { message: "realms FTW!" }, status: :ok
       end
     end
   end

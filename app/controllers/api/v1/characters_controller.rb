@@ -15,6 +15,8 @@ module Api
 		    	@characters = @characters.where("name LIKE ?", "%#{params[:name]}%")
 		    elsif params[:race].present?
 		    	@characters = @characters.where("race LIKE ?", "%#{params[:race]}%")
+	    	elsif params[:realm].present?
+		    	@characters = @characters.where("realm LIKE ?", "%#{params[:realm]}%")
 		    end
 
 		    render json: @characters
