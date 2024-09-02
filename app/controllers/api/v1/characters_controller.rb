@@ -21,7 +21,18 @@ module Api
 		    			ext_characters = JSON.parse(response.body)["results"]
 		    			ext_character = ext_characters.find { |character| character["name"].casecmp?(params[:name]) }
 		    			if ext_character
-		    				render json: ext_character
+		    				imported_character = Character.create(
+		    					name: ext_character["name"],
+		    					race: ext_character["race"],
+		    					realm: ext_character["realm"]
+		    					)
+		    				render json: {
+		    					message: "New character has been created!",
+		    					id: imported_character.id,
+		    					name: imported_character.name,
+		    					race: imported_character.race,
+		    					realm: imported_character.realm
+		    				}, status: :ok
 		    			else
 		    				render json: { error: "Couldn't find '#{params[:name]}' in external API"}, status: :not_found
 		    			end
