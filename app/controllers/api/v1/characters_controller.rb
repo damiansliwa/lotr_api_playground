@@ -17,9 +17,17 @@ module Api
 		    		render json: character
 		    	else
 		    		response = HTTParty.get("https://lotrapi.co/api/v1/characters/")
-		    		ext_characters = JSON.parse(response.body)["results"]
-		    		ext_character = ext_characters.find { |character| character["name"].casecmp?(params[:name]) }
-		    		render json: ext_character
+		    		if response.success?
+		    			ext_characters = JSON.parse(response.body)["results"]
+		    			ext_character = ext_characters.find { |character| character["name"].casecmp?(params[:name]) }
+		    			if ext_character
+		    				render json: ext_character
+		    			else
+		    				render json: { error: "Couldn't find '#{params[:name]}' in external API"}, status: :not_found
+		    			end
+		    		else
+		    			render json: { error: "Failed to fetch data from external API" }, status: :bad_gateway
+		    		end
 		    	end
 		    else
 		    	render json: @characters
