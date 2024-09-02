@@ -12,14 +12,20 @@ module Api
 		    @characters = Character.all
 
 		    if params[:name].present?
-		    	@characters = @characters.where("name LIKE ?", "%#{params[:name]}%")
-		    elsif params[:race].present?
-		    	@characters = @characters.where("race LIKE ?", "%#{params[:race]}%")
-	    	elsif params[:realm].present?
-		    	@characters = @characters.where("realm LIKE ?", "%#{params[:realm]}%")
+		    	character = @characters.find_by(name: params[:name])
+		    	if character
+		    		render json: character
+		    	else
+		    		render json: { error: "Character not found" }, status: :not_found
+		    	end
+		    # elsif params[:race].present?
+		    # 	@characters = @characters.where("race LIKE ?", "%#{params[:race]}%")
+	    	# elsif params[:realm].present?
+		    # 	@characters = @characters.where("realm LIKE ?", "%#{params[:realm]}%")
+		    else
+		    	render json: @characters
 		    end
 
-		    render json: @characters
 		  end
 
 		  # GET /characters/1
