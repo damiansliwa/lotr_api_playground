@@ -16,12 +16,11 @@ module Api
 		    	if character
 		    		render json: character
 		    	else
-		    		render json: { error: "Character not found" }, status: :not_found
+		    		response = HTTParty.get("https://lotrapi.co/api/v1/characters/")
+		    		ext_characters = JSON.parse(response.body)["results"]
+		    		ext_character = ext_characters.find { |character| character["name"].casecmp?(params[:name]) }
+		    		render json: ext_character
 		    	end
-		    # elsif params[:race].present?
-		    # 	@characters = @characters.where("race LIKE ?", "%#{params[:race]}%")
-	    	# elsif params[:realm].present?
-		    # 	@characters = @characters.where("realm LIKE ?", "%#{params[:realm]}%")
 		    else
 		    	render json: @characters
 		    end
