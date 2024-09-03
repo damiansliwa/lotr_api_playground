@@ -28,14 +28,16 @@ module Api
 		    				imported_character = Character.create(
 		    					name: ext_character["name"],
 		    					race: ext_character_race["name"],
-		    					realm: ext_character_realm["name"]
+		    					realm: ext_character_realm["name"],
+		    					is_imported: true
 		    					)
 		    				render json: {
-		    					message: "New character has been created!",
+		    					message: "New character has been imported!",
 		    					id: imported_character.id,
 		    					name: imported_character.name,
 		    					race: imported_character.race,
-		    					realm: imported_character.realm
+		    					realm: imported_character.realm,
+		    					is_imported: imported_character.is_imported?
 		    				}, status: :ok
 		    			else
 		    				render json: { error: "Couldn't find '#{params[:name]}' in external API"}, status: :not_found
