@@ -21,10 +21,14 @@ module Api
 		    			ext_characters = JSON.parse(response.body)["results"]
 		    			ext_character = ext_characters.find { |character| character["name"].casecmp?(params[:name]) }
 		    			if ext_character
+		    				ext_character_race = JSON.parse(HTTParty.get(ext_character["race"]).body)
+		    				ext_character_realm = JSON.parse(HTTParty.get(ext_character["realm"]).body)
+		    				#migracja, dodajemy kolumnę boolean, is_imported, domyślnie false
+		    				#przy tworzeniu postaci ta metoda powinna przestawiać na true
 		    				imported_character = Character.create(
 		    					name: ext_character["name"],
-		    					race: ext_character["race"],
-		    					realm: ext_character["realm"]
+		    					race: ext_character_race["name"],
+		    					realm: ext_character_realm["name"]
 		    					)
 		    				render json: {
 		    					message: "New character has been created!",
