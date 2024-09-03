@@ -9,6 +9,7 @@ module Api
 
 				if response.success?
 					ext_character_data = JSON.parse(response.body)
+					
 					ext_character_name = ext_character_data["name"]
 					ext_character_race = ext_character_data["race"]
 					ext_race_url = HTTParty.get(ext_character_race)

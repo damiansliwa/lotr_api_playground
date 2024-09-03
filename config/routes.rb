@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   get "home/index"
   namespace :api do
     namespace :v1 do
-      resources :characters, only: %i[index create show update destroy]
+      resources :characters, only: %i[index create show update destroy] do
+        collection do
+          get 'imported'
+        end
+      end
       get 'external_api/fetch_character/:id', to: 'external_api#fetch_character'
       resources :realms, only: %i[index]
     end

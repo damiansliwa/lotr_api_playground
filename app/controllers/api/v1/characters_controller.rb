@@ -23,8 +23,6 @@ module Api
 		    			if ext_character
 		    				ext_character_race = JSON.parse(HTTParty.get(ext_character["race"]).body)
 		    				ext_character_realm = JSON.parse(HTTParty.get(ext_character["realm"]).body)
-		    				#migracja, dodajemy kolumnę boolean, is_imported, domyślnie false
-		    				#przy tworzeniu postaci ta metoda powinna przestawiać na true
 		    				imported_character = Character.create(
 		    					name: ext_character["name"],
 		    					race: ext_character_race["name"],
@@ -82,6 +80,11 @@ module Api
 		    @character.destroy!
 		  end
 
+		  def imported
+		  	@imported_characters = Character.where(is_imported: true)
+		  	render json: @imported_characters, status: :ok
+		  end
+
 		  private
 		    # Use callbacks to share common setup or constraints between actions.
 		    def set_character
@@ -90,7 +93,7 @@ module Api
 
 		    # Only allow a list of trusted parameters through.
 		    def character_params
-		      params.require(:character).permit(:name, :race, :realm)
+		      params.require(:character).permit(:name, :race, :realm, :is_imported)
 		    end
 		end
 	end
